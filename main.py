@@ -17,4 +17,4 @@ def sms_reply():
 </Response>""",200,{'Content-Type':'application/xml'}
 
 if __name__ == "___main__":
-    app.run()
+    app.run(host="0.0.0.0",port=10000)
