@@ -16,5 +16,5 @@ def sms_reply():
     <Message>{response}</Message>
 </Response>""",200,{'Content-Type':'application/xml'}
 
-if__name__=="___main__":
+if__name__ == "___main__":
     app.run()
