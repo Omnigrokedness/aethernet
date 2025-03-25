@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/sms", methods=["POST"]) 
-def sms_reply():  
+@app.route("/sms", methods=["POST"])
+def sms_reply():
     incoming_msg = request.form.get('Body')  
     from_number = request.form.get('From')
   
