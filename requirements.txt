@@ -1,3 +1,6 @@
 fastapi
 uvicorn
 twilio
+transformers
+torch
+python-multipart
