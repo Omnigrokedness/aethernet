@@ -1,20 +1,15 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI, Request
+from fastapi.responses import PlainTextResponse
+from twilio.twiml.voice_response import VoiceResponse
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/sms", methods=["POST"])
-def sms_reply():
-    incoming_msg = request.form.get('Body')
-    from_number = request.form.get('Form')
+@app.post("/voice")
+async def voice(request: Request):
+    response = VoiceResponse()
+    response.say("Hi Graeme, the system is working. This is just a test message.")
+    return PlainTextResponse(str(response), media_type="application/xml")
 
-    print(f"Message from{from_number}:{incoming_msg}")
-
-    responce=f"Hello. This is AEther. You said:{incoming_msg}"
-
-    return f"""<?xml version="1.0"encoding="UTF-8"?
-<Response>
-    <Message>{response}</Message>
-</Response>""",200,{'Content-Type':'application/xml'}
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=10000)
+@app.get("/")
+async def root():
+    return {"status": "live"}
