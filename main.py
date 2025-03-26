@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, Form
-from twilio.twiml.voice_response import VoiceResponse
 from fastapi.responses import PlainTextResponse
+from twilio.twiml.voice_response import VoiceResponse
 
 app = FastAPI()
 
@@ -12,28 +12,17 @@ async def voice():
     return PlainTextResponse(str(resp), media_type="application/xml")
 
 @app.post("/process")
-async def process(request: Request):
-    form = await request.form()
-    msg = form.get("SpeechResult", "").strip()
-
+async def process(SpeechResult: str = Form(...)):
+    msg = SpeechResult.strip()
     if not msg:
         resp = VoiceResponse()
         resp.say("I didn’t hear anything.")
         return PlainTextResponse(str(resp), media_type="application/xml")
-
-    # Gemma’s brain — upgrade this anytime
-    reply = gemma_thinks(msg)
-
+    reply = "Zion shall be redeemed in power. Doctrine and Covenants section 103 verse 15."
     resp = VoiceResponse()
     resp.say(reply)
     return PlainTextResponse(str(resp), media_type="application/xml")
 
-def gemma_thinks(input_text):
-    # This is her brain — edit here to upgrade
-    if "zion" in input_text.lower():
-        return "Zion shall be redeemed in power. D&C 103:15."
-    return f"You said: {input_text}. I’m listening."
-
 @app.get("/")
 async def root():
-    return {"status": "live"}
+    return {"status": "Live"}
